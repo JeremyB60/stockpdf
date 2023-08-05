@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fichiers PDF disponibles</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="avatar">
+        <img src="./avatar.png" alt="Avatar" class="avatarImg"/>
+        <div>
+          <h1>Bastien Courseaux</h1>
+          <p>Mes cours de&nbsp;mathématiques</p>
+        </div>
+        <a href="./admin.html"><img src="./login.svg" alt="connexion" class="log"></a>
+      </div>
+    </header>
+    <h2>Cours disponibles</h2>
+    <ul id="fileList">
+      <!-- La liste des fichiers PDF sera générée ici -->
+    </ul>
+
+    <script>
+      function fetchFileList() {
+        fetch("get_file_list.php")
+          .then((response) => response.json())
+          .then((data) => {
+            const fileListElement = document.getElementById("fileList");
+            fileListElement.innerHTML = "";
+
+            data.forEach((file) => {
+              const listItem = document.createElement("li");
+              const link = document.createElement("a");
+              link.href = "uploads/" + file;
+              link.textContent = file;
+              link.style.marginRight = "10px";
+              listItem.appendChild(link);
+
+              // Ajoute l'attribut "download" pour forcer le téléchargement
+              link.setAttribute("download", file);
+
+              // Crée une balise <img> avec l'icône du bouton de téléchargement
+              const downloadIcon = document.createElement("img");
+              downloadIcon.src = "./iconDL.svg";
+              downloadIcon.alt = "Télécharger";
+              downloadIcon.classList.add("download-icon");
+              listItem.appendChild(downloadIcon);
+              fileListElement.appendChild(listItem);
+
+              downloadIcon.addEventListener("click", () => {
+                // Pour déclencher le téléchargement, nous pouvons simuler un clic sur le lien
+                link.click();
+              });
+            });
+          });
+        // .catch((error) => {
+        //   console.error(
+        //     "Erreur lors de la récupération de la liste des fichiers :",
+        //     error
+        //   );
+        // });
+      }
+
+      fetchFileList();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+@font-face {
+  font-family: exo;
+  src: url(./Exo-VariableFont_wght.ttf);
+}
+
+body {
+  font-family: exo, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Styles pour le header */
+.avatar .log {
+  position: absolute;
+  right: 0;
+  top: 33px;
+  margin-right: 33px;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #eee;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.avatarImg {
+  width: 150px;
+  margin: 0 0px;
+}
+
+.avatar button {
+  color: grey;
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+/* Style spécifique pour les liens de fichiers PDF */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+li a {
+  color: #333;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+li a:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.download-icon:hover,
+.delete-icon:hover {
+  transform: scale(1.3);
+}
+
+.dropzone {
+  margin-top: 20px;
+}
+
+@media (max-width: 576px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  li {
+    max-width: 90%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 5px auto;
+  }
+
+  .avatar .log {
+    top: 13px;
+    margin-right: 13px;
+  }
+
+  body {
+    padding: 0;
+  }
+
+  .avatarImg {
+    width: 75px;
+  }
+}
