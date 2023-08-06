@@ -4,11 +4,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupérer le nom du fichier à supprimer depuis le corps de la requête
     $data = json_decode(file_get_contents('php://input'), true);
     $fileName = $data['fileName'];
+    $destinationFolder = $data['folder']; // Nouveau paramètre pour le dossier de destination
 
     // Vérifier si le nom du fichier est valide (vous pouvez ajouter des vérifications supplémentaires ici si nécessaire)
 
     // Chemin du fichier à supprimer
-    $filePath = 'uploads/' . $fileName;
+    $filePath = 'uploads/' . $destinationFolder . '/' . $fileName;
 
     // Vérifier si le fichier existe avant de le supprimer
     if (file_exists($filePath)) {

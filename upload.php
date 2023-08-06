@@ -1,7 +1,21 @@
 <?php
-if ($_FILES["file"]["error"] === UPLOAD_ERR_OK) {
-    $targetDir = "uploads/";
-    $targetFile = $targetDir . basename($_FILES["file"]["name"]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Vérifier si le paramètre "folder" est présent dans la requête
+    if (!isset($_POST['folder'])) {
+        header("HTTP/1.0 400 Bad Request");
+        echo "Le paramètre 'folder' est manquant dans la requête.";
+        exit;
+    }
+
+    $destinationFolder = $_POST['folder']; // Récupérer le dossier de destination
+
+    // Vérifier si le dossier de destination existe, sinon le créer
+    $targetDir = "uploads/" . $destinationFolder;
+    if (!file_exists($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
+
+    $targetFile = $targetDir . "/" . basename($_FILES["file"]["name"]);
 
     // Vérifier si le fichier est un PDF
     $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
@@ -17,6 +31,7 @@ if ($_FILES["file"]["error"] === UPLOAD_ERR_OK) {
         echo "Une erreur est survenue lors du téléchargement du fichier.";
     }
 } else {
-    echo "Une erreur est survenue lors du téléchargement du fichier.";
+    header("HTTP/1.0 400 Bad Request");
+    echo "Requête invalide. Utilisez une requête POST pour télécharger un fichier.";
 }
 ?>

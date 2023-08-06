@@ -16,68 +16,79 @@
           <h1>Bastien Courseaux</h1>
           <p>Mes cours de mathématiques</p>
         </div>
-        <a href="./index.html"><img src="./sync.svg" alt="retour" class="log"></a>
+        <a href="./index.html"
+          ><img src="./sync.svg" alt="retour" class="log"
+        /></a>
       </div>
     </header>
 
-    <div id="dropzone" class="dropzone">
+    <!-- Première Dropzone -->
+    <h3>Première année</h3>
+    <div class="dropzone" id="dropzone1">
       <div class="dz-message">
         Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
       </div>
     </div>
+    <ul id="fileList1"></ul>
+
+    <!-- Deuxième Dropzone -->
+    <h3>Deuxième année</h3>
+    <div class="dropzone" id="dropzone2">
+      <div class="dz-message">
+        Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+      </div>
+    </div>
+    <ul id="fileList2"></ul>
+
+    <!-- Troisième Dropzone -->
+    <h3>Troisième année</h3>
+    <div class="dropzone" id="dropzone3">
+      <div class="dz-message">
+        Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+      </div>
+    </div>
+    <ul id="fileList3"></ul>
 
     <script>
-      // Initialisation de Dropzone.js
-      Dropzone.autoDiscover = false;
-      var myDropzone = new Dropzone("#dropzone", {
-        url: "upload.php", // Le script côté serveur pour gérer le téléchargement
-        acceptedFiles: ".pdf", // Types de fichiers autorisés (.pdf dans cet exemple)
-        maxFilesize: 5, // Taille maximale des fichiers en Mo (5 Mo dans cet exemple)
-        addRemoveLinks: true, // Afficher les liens de suppression pour les fichiers téléchargés
-        dictRemoveFile: "Supprimer", // Texte du lien de suppression
-        init: function () {
-          // Callback appelé lorsque Dropzone est initialisé
-          this.on("success", function (file, response) {
-            // Callback appelé lorsque le téléchargement réussit
-            console.log(
-              "Le fichier " + file.name + " a été téléchargé avec succès."
-            );
-            fetchFileList();
-          });
-          this.on("error", function (file, errorMessage) {
-            // Callback appelé lorsque le téléchargement échoue
-            console.log(
-              "Erreur lors du téléchargement du fichier " +
-                file.name +
-                ": " +
-                errorMessage
-            );
-          });
-          this.on("removedfile", function (file) {
-            // Callback appelé lorsque l'utilisateur supprime un fichier
-            console.log("Le fichier " + file.name + " a été supprimé.");
-            deleteFile(file.name);
-          });
-        },
-      });
+      // Fonction pour initialiser Dropzone pour chaque élément avec la classe "dropzone"
+      function initDropzone(dropzoneId, fileListId, destinationFolder) {
+        return new Dropzone("#" + dropzoneId, {
+          url: "upload.php",
+          acceptedFiles: ".pdf",
+          maxFilesize: 5,
+          addRemoveLinks: true,
+          dictRemoveFile: "Supprimer",
+          init: function () {
+            this.on("sending", function (file, xhr, formData) {
+              formData.append("folder", destinationFolder); // Ajoute le paramètre "folder" à la requête
+            });
+            this.on("success", function (file, response) {
+              fetchFileList(fileListId, destinationFolder);
+            });
+            this.on("removedfile", function (file) {
+              deleteFile(file.name, fileListId, destinationFolder);
+            });
+          },
+        });
+      }
 
       // Fonction pour récupérer la liste des fichiers PDF disponibles depuis le serveur
-      function fetchFileList() {
-        fetch("get_file_list.php")
+      function fetchFileList(fileListId, destinationFolder) {
+        fetch("get_file_list.php?folder=" + destinationFolder)
           .then((response) => response.json())
           .then((data) => {
-            const fileListElement = document.getElementById("fileList");
+            const fileListElement = document.getElementById(fileListId);
             fileListElement.innerHTML = "";
 
             data.forEach((file) => {
               const listItem = document.createElement("li");
               const link = document.createElement("a");
-              link.href = "uploads/" + file;
+              link.href = "uploads/" + destinationFolder + "/" + file;
               link.textContent = file;
               link.style.marginRight = "10px";
               listItem.appendChild(link);
 
-              // Crée une balise <img> avec l'icône du bouton de suppression
+              // Icone suppression
               const deleteIcon = document.createElement("img");
               deleteIcon.src = "./iconDelete.svg";
               deleteIcon.alt = "Supprimer";
@@ -86,50 +97,67 @@
               listItem.appendChild(deleteIcon);
               fileListElement.appendChild(listItem);
             });
-          })
-          .catch((error) => {
-            console.error(
-              "Erreur lors de la récupération de la liste des fichiers :",
-              error
-            );
           });
       }
+
       // Fonction pour supprimer un fichier (implémentez cette fonction pour effectuer la suppression côté serveur)
-      function deleteFile(fileName) {
+      function deleteFile(fileName, fileListId, destinationFolder) {
         // Ici, vous pouvez effectuer une requête pour supprimer le fichier côté serveur
         fetch("delete_file.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ fileName: fileName }),
+          body: JSON.stringify({
+            fileName: fileName,
+            folder: destinationFolder,
+          }),
         })
           .then((response) => response.json())
           .then((data) => {
-            // Gérer la réponse du serveur (par exemple, afficher un message de succès)
-            console.log("Fichier supprimé :", data);
             // Recharger la liste des fichiers après la suppression
-            fetchFileList();
-          })
-          .catch((error) => {
-            console.error("Erreur lors de la suppression du fichier :", error);
+            fetchFileList(fileListId, destinationFolder);
           });
       }
 
-      // Appeler la fonction pour récupérer la liste des fichiers lors du chargement de la page
-      fetchFileList();
+      // Initialiser toutes les dropzones avec la classe "dropzone" et leurs listes de fichiers respectives
+      const dropzones = [
+        {
+          id: "dropzone1",
+          fileListId: "fileList1",
+          destinationFolder: "uploads1",
+        },
+        {
+          id: "dropzone2",
+          fileListId: "fileList2",
+          destinationFolder: "uploads2",
+        },
+        {
+          id: "dropzone3",
+          fileListId: "fileList3",
+          destinationFolder: "uploads3",
+        },
+      ];
+      dropzones.forEach((dropzone) => {
+        initDropzone(
+          dropzone.id,
+          dropzone.fileListId,
+          dropzone.destinationFolder
+        );
+        fetchFileList(dropzone.fileListId, dropzone.destinationFolder);
+      });
 
       // Ajouter l'écouteur d'événement pour les boutons de suppression
       document.addEventListener("click", (event) => {
         if (event.target.tagName === "IMG") {
           const fileName = event.target.dataset.fileName;
-          deleteFile(fileName);
+          const fileListId = event.target.closest("ul").id;
+          const destinationFolder = dropzones.find(
+            (dropzone) => dropzone.fileListId === fileListId
+          ).destinationFolder;
+          deleteFile(fileName, fileListId, destinationFolder);
         }
       });
     </script>
-    <h2>Liste des fichiers PDF disponibles</h2>
-    <ul id="fileList">
-      <!-- La liste des fichiers PDF sera ajoutée ici dynamiquement via JavaScript -->
-    </ul>
   </body>
 </html>

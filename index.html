@@ -9,37 +9,41 @@
   <body>
     <header>
       <div class="avatar">
-        <img src="./avatar.png" alt="Avatar" class="avatarImg"/>
+        <img src="./avatar.png" alt="Avatar" class="avatarImg" />
         <div>
           <h1>Bastien Courseaux</h1>
           <p>Mes cours de&nbsp;mathématiques</p>
         </div>
-        <a href="./admin.html"><img src="./login.svg" alt="connexion" class="log"></a>
+        <a href="./admin.html"
+          ><img src="./login.svg" alt="connexion" class="log"
+        /></a>
       </div>
     </header>
     <h2>Cours disponibles</h2>
-    <ul id="fileList">
-      <!-- La liste des fichiers PDF sera générée ici -->
-    </ul>
+    <h3>Première année</h3>
+    <div id="fileList1"></div>
+    <h3>Deuxième année</h3>
+    <div id="fileList2"></div>
+    <h3>Troisième année</h3>
+    <div id="fileList3"></div>
 
     <script>
-      function fetchFileList() {
-        fetch("get_file_list.php")
+      // Fonction pour récupérer la liste des fichiers depuis le serveur pour un dossier spécifié
+      function fetchFileList(folder, fileListId) {
+        fetch("get_file_list.php?folder=" + folder)
           .then((response) => response.json())
           .then((data) => {
-            const fileListElement = document.getElementById("fileList");
+            const fileListElement = document.getElementById(fileListId);
             fileListElement.innerHTML = "";
 
             data.forEach((file) => {
               const listItem = document.createElement("li");
               const link = document.createElement("a");
-              link.href = "uploads/" + file;
+              link.href = "uploads/" + folder + "/" + file;
               link.textContent = file;
               link.style.marginRight = "10px";
-              listItem.appendChild(link);
 
-              // Ajoute l'attribut "download" pour forcer le téléchargement
-              link.setAttribute("download", file);
+              listItem.appendChild(link);
 
               // Crée une balise <img> avec l'icône du bouton de téléchargement
               const downloadIcon = document.createElement("img");
@@ -50,20 +54,43 @@
               fileListElement.appendChild(listItem);
 
               downloadIcon.addEventListener("click", () => {
-                // Pour déclencher le téléchargement, nous pouvons simuler un clic sur le lien
-                link.click();
+                downloadFile(link.href, file);
               });
             });
           });
-        // .catch((error) => {
-        //   console.error(
-        //     "Erreur lors de la récupération de la liste des fichiers :",
-        //     error
-        //   );
-        // });
+      }
+      function downloadFile(url, filename) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "blob";
+
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            // Crée un objet URL pour le blob
+            const blobUrl = URL.createObjectURL(xhr.response);
+
+            // Crée un lien de téléchargement
+            const a = document.createElement("a");
+            a.href = blobUrl;
+            a.download = filename;
+            a.style.display = "none";
+
+            // Ajoute le lien à la page et déclenche le téléchargement
+            document.body.appendChild(a);
+            a.click();
+
+            // Supprime le lien après le téléchargement
+            window.URL.revokeObjectURL(blobUrl);
+          }
+        };
+
+        xhr.send();
       }
 
-      fetchFileList();
+      // Appeler la fonction pour récupérer la liste des fichiers dans chaque dossier
+      fetchFileList("uploads1", "fileList1");
+      fetchFileList("uploads2", "fileList2");
+      fetchFileList("uploads3", "fileList3");
     </script>
   </body>
 </html>
