@@ -1,6 +1,6 @@
 @font-face {
   font-family: exo;
-  src: url(./Exo-VariableFont_wght.ttf);
+  src: url(../fonts/Exo-VariableFont_wght.ttf);
 }
 
 body {
@@ -73,6 +73,7 @@ li a:hover {
 .download-icon:hover,
 .delete-icon:hover {
   transform: scale(1.3);
+  cursor: pointer;
 }
 
 .dropzone {

@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Vérifier si le nom du fichier est valide (vous pouvez ajouter des vérifications supplémentaires ici si nécessaire)
 
     // Chemin du fichier à supprimer
-    $filePath = 'uploads/' . $destinationFolder . '/' . $fileName;
+    $filePath = '../uploads/' . $destinationFolder . '/' . $fileName;
 
     // Vérifier si le fichier existe avant de le supprimer
     if (file_exists($filePath)) {

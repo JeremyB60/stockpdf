@@ -4,60 +4,61 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exemple de Dropzone.js</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <script src="dropzone/dropzone.min.js"></script>
     <link rel="stylesheet" href="dropzone/dropzone.min.css" />
   </head>
   <body>
     <header>
       <div class="avatar">
-        <img src="./avatar.png" alt="Avatar" class="avatarImg" />
+        <img src="./assets/images/avatar.png" alt="Avatar" class="avatarImg" />
         <div>
           <h1>Bastien Courseaux</h1>
           <p>Mes cours de mathématiques</p>
         </div>
         <a href="./index.html"
-          ><img src="./sync.svg" alt="retour" class="log"
+          ><img src="./assets/icones/sync.svg" alt="retour" class="log"
         /></a>
       </div>
     </header>
-
-    <!-- Première Dropzone -->
-    <h3>Première année</h3>
-    <div class="dropzone" id="dropzone1">
-      <div class="dz-message">
-        Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+    <main>
+      <!-- Dropzone -->
+      <div id="dropzonesContainer">
+        <div class="dropzone" id="dropzone1">
+          <div class="dz-message">
+            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+          </div>
+        </div>
+        <ul id="fileList1"></ul>
+        <div class="dropzone" id="dropzone2">
+          <div class="dz-message">
+            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+          </div>
+        </div>
+        <ul id="fileList2"></ul>
+        <div class="dropzone" id="dropzone3">
+          <div class="dz-message">
+            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+          </div>
+        </div>
+        <ul id="fileList3"></ul>
+        <div class="dropzone" id="dropzone4">
+          <div class="dz-message">
+            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+          </div>
+        </div>
+        <ul id="fileList4"></ul>
       </div>
-    </div>
-    <ul id="fileList1"></ul>
-
-    <!-- Deuxième Dropzone -->
-    <h3>Deuxième année</h3>
-    <div class="dropzone" id="dropzone2">
-      <div class="dz-message">
-        Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-      </div>
-    </div>
-    <ul id="fileList2"></ul>
-
-    <!-- Troisième Dropzone -->
-    <h3>Troisième année</h3>
-    <div class="dropzone" id="dropzone3">
-      <div class="dz-message">
-        Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-      </div>
-    </div>
-    <ul id="fileList3"></ul>
-
+    </main>
     <script>
       // Fonction pour initialiser Dropzone pour chaque élément avec la classe "dropzone"
       function initDropzone(dropzoneId, fileListId, destinationFolder) {
         return new Dropzone("#" + dropzoneId, {
-          url: "upload.php",
+          url: "./php/upload.php",
           acceptedFiles: ".pdf",
           maxFilesize: 5,
           addRemoveLinks: true,
-          dictRemoveFile: "Supprimer",
+          dictRemoveFile: "Annuler",
           init: function () {
             this.on("sending", function (file, xhr, formData) {
               formData.append("folder", destinationFolder); // Ajoute le paramètre "folder" à la requête
@@ -74,7 +75,7 @@
 
       // Fonction pour récupérer la liste des fichiers PDF disponibles depuis le serveur
       function fetchFileList(fileListId, destinationFolder) {
-        fetch("get_file_list.php?folder=" + destinationFolder)
+        fetch("./php/get_file_list.php?folder=" + destinationFolder)
           .then((response) => response.json())
           .then((data) => {
             const fileListElement = document.getElementById(fileListId);
@@ -90,7 +91,7 @@
 
               // Icone suppression
               const deleteIcon = document.createElement("img");
-              deleteIcon.src = "./iconDelete.svg";
+              deleteIcon.src = "./assets/icones/iconDelete.svg";
               deleteIcon.alt = "Supprimer";
               deleteIcon.classList.add("delete-icon");
               deleteIcon.dataset.fileName = file; // On utilise le nom du fichier comme attribut personnalisé
@@ -103,7 +104,7 @@
       // Fonction pour supprimer un fichier (implémentez cette fonction pour effectuer la suppression côté serveur)
       function deleteFile(fileName, fileListId, destinationFolder) {
         // Ici, vous pouvez effectuer une requête pour supprimer le fichier côté serveur
-        fetch("delete_file.php", {
+        fetch("./php/delete_file.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -137,7 +138,13 @@
           fileListId: "fileList3",
           destinationFolder: "uploads3",
         },
+        {
+          id: "dropzone4",
+          fileListId: "fileList4",
+          destinationFolder: "uploads4",
+        },
       ];
+
       dropzones.forEach((dropzone) => {
         initDropzone(
           dropzone.id,

@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $destinationFolder = $_POST['folder']; // Récupérer le dossier de destination
 
     // Vérifier si le dossier de destination existe, sinon le créer
-    $targetDir = "uploads/" . $destinationFolder;
+    $targetDir = "../uploads/" . $destinationFolder;
     if (!file_exists($targetDir)) {
         mkdir($targetDir, 0777, true);
     }
