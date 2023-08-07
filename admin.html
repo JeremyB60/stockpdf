@@ -23,33 +23,110 @@
     </header>
     <main>
       <!-- Dropzone -->
-      <div id="dropzonesContainer">
-        <div class="dropzone" id="dropzone1">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+
+      <div class="dropzoneContainer">
+        <h2>Sixième</h2>
+        <div class="hide">
+          <h3>Cours</h3>
+          <div class="dropzone" id="dropzone1">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
           </div>
-        </div>
-        <ul id="fileList1"></ul>
-        <div class="dropzone" id="dropzone2">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+          <ul id="fileList1"></ul>
+          <h3>Exercices</h3>
+          <div class="dropzone" id="dropzone2">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
           </div>
-        </div>
-        <ul id="fileList2"></ul>
-        <div class="dropzone" id="dropzone3">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+          <ul id="fileList2"></ul>
+          <h3>DM</h3>
+          <div class="dropzone" id="dropzone3">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
           </div>
-        </div>
-        <ul id="fileList3"></ul>
-        <div class="dropzone" id="dropzone4">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+          <ul id="fileList3"></ul>
+          <h3>DS</h3>
+          <div class="dropzone" id="dropzone4">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
           </div>
+          <ul id="fileList4"></ul>
         </div>
-        <ul id="fileList4"></ul>
+      </div>
+
+      <div class="dropzoneContainer">
+        <h2>Quatrième 1</h2>
+        <div class="hide">
+          <h3>Cours</h3>
+          <div class="dropzone" id="dropzone5">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList5"></ul>
+          <h3>Exercices</h3>
+          <div class="dropzone" id="dropzone6">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList6"></ul>
+          <h3>DM</h3>
+          <div class="dropzone" id="dropzone7">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList7"></ul>
+          <h3>DS</h3>
+          <div class="dropzone" id="dropzone8">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList8"></ul>
+        </div>
+      </div>
+
+      <div class="dropzoneContainer">
+        <h2>Quatrième 2</h2>
+        <div class="hide">
+          <h3>Cours</h3>
+          <div class="dropzone" id="dropzone9">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList9"></ul>
+          <h3>Exercices</h3>
+          <div class="dropzone" id="dropzone10">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList10"></ul>
+          <h3>DM</h3>
+          <div class="dropzone" id="dropzone11">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList11"></ul>
+          <h3>DS</h3>
+          <div class="dropzone" id="dropzone12">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList12"></ul>
+        </div>
       </div>
     </main>
+
     <script>
       // Fonction pour initialiser Dropzone pour chaque élément avec la classe "dropzone"
       function initDropzone(dropzoneId, fileListId, destinationFolder) {
@@ -76,28 +153,51 @@
       // Fonction pour récupérer la liste des fichiers PDF disponibles depuis le serveur
       function fetchFileList(fileListId, destinationFolder) {
         fetch("./php/get_file_list.php?folder=" + destinationFolder)
-          .then((response) => response.json())
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
           .then((data) => {
             const fileListElement = document.getElementById(fileListId);
             fileListElement.innerHTML = "";
 
-            data.forEach((file) => {
-              const listItem = document.createElement("li");
-              const link = document.createElement("a");
-              link.href = "uploads/" + destinationFolder + "/" + file;
-              link.textContent = file;
-              link.style.marginRight = "10px";
-              listItem.appendChild(link);
+            if (data.length === 0) {
+              // const noFileListItem = document.createElement("li");
+              // noFileListItem.textContent = "Aucun fichier !";
+              // fileListElement.appendChild(noFileListItem);
+            } else {
+              data.forEach((file) => {
+                const listItem = document.createElement("li");
+                const link = document.createElement("a");
+                link.href = "uploads/" + destinationFolder + "/" + file;
+                link.textContent = file;
+                link.style.marginRight = "10px";
+                listItem.appendChild(link);
 
-              // Icone suppression
-              const deleteIcon = document.createElement("img");
-              deleteIcon.src = "./assets/icones/iconDelete.svg";
-              deleteIcon.alt = "Supprimer";
-              deleteIcon.classList.add("delete-icon");
-              deleteIcon.dataset.fileName = file; // On utilise le nom du fichier comme attribut personnalisé
-              listItem.appendChild(deleteIcon);
-              fileListElement.appendChild(listItem);
-            });
+                // Icone suppression
+                const deleteIcon = document.createElement("img");
+                deleteIcon.src = "./assets/icones/iconDelete.svg";
+                deleteIcon.alt = "Supprimer";
+                deleteIcon.classList.add("delete-icon");
+                deleteIcon.dataset.fileName = file; // On utilise le nom du fichier comme attribut personnalisé
+                listItem.appendChild(deleteIcon);
+                fileListElement.appendChild(listItem);
+
+                // Ajouter le gestionnaire d'événements pour le clic sur l'icône de suppression
+                deleteIcon.addEventListener("click", () => {
+                  deleteFile(file, fileListId, destinationFolder);
+                });
+              });
+            }
+          })
+          .catch((error) => {
+            // const fileListElement = document.getElementById(fileListId);
+            // fileListElement.innerHTML = "";
+            // const noFileListItem = document.createElement("li");
+            // noFileListItem.textContent = "Aucun dossier !";
+            // fileListElement.appendChild(noFileListItem);
           });
       }
 
@@ -143,6 +243,46 @@
           fileListId: "fileList4",
           destinationFolder: "uploads4",
         },
+        {
+          id: "dropzone5",
+          fileListId: "fileList5",
+          destinationFolder: "uploads5",
+        },
+        {
+          id: "dropzone6",
+          fileListId: "fileList6",
+          destinationFolder: "uploads6",
+        },
+        {
+          id: "dropzone7",
+          fileListId: "fileList7",
+          destinationFolder: "uploads7",
+        },
+        {
+          id: "dropzone8",
+          fileListId: "fileList8",
+          destinationFolder: "uploads8",
+        },
+        {
+          id: "dropzone9",
+          fileListId: "fileList9",
+          destinationFolder: "uploads9",
+        },
+        {
+          id: "dropzone10",
+          fileListId: "fileList10",
+          destinationFolder: "uploads10",
+        },
+        {
+          id: "dropzone11",
+          fileListId: "fileList11",
+          destinationFolder: "uploads11",
+        },
+        {
+          id: "dropzone12",
+          fileListId: "fileList12",
+          destinationFolder: "uploads12",
+        },
       ];
 
       dropzones.forEach((dropzone) => {
@@ -166,5 +306,7 @@
         }
       });
     </script>
+    <script src="./assets/js/jquery-3.7.0.min.js"></script>
+    <script src="./assets/js/script.js"></script>
   </body>
 </html>

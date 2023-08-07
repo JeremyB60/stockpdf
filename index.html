@@ -20,48 +20,97 @@
       </div>
     </header>
     <main>
-      <h2>Cours disponibles</h2>
-      <h3>Première année</h3>
-      <div id="fileList1"></div>
-      <h3>Deuxième année</h3>
-      <div id="fileList2"></div>
-      <h3>Troisième année</h3>
-      <div id="fileList3"></div>
-      <h3>Quatrième année</h3>
-      <div id="fileList4"></div>
+      <div class="dropzoneContainer">
+        <h2>Sixième</h2>
+        <div class="hide">
+          <h3>Cours</h3>
+          <div id="fileList1"></div>
+          <h3>Exercices</h3>
+          <div id="fileList2"></div>
+          <h3>DM</h3>
+          <div id="fileList3"></div>
+          <h3>DS</h3>
+          <div id="fileList4"></div>
+        </div>
+      </div>
+      <div class="dropzoneContainer">
+        <h2>Quatrième 1</h2>
+        <div class="hide">
+          <h3>Cours</h3>
+          <div id="fileList5"></div>
+          <h3>Exercices</h3>
+          <div id="fileList6"></div>
+          <h3>DM</h3>
+          <div id="fileList7"></div>
+          <h3>DS</h3>
+          <div id="fileList8"></div>
+        </div>
+      </div>
+      <div class="dropzoneContainer">
+        <h2>Quatrième 2</h2>
+        <div class="hide">
+          <h3>Cours</h3>
+          <div id="fileList9"></div>
+          <h3>Exercices</h3>
+          <div id="fileList10"></div>
+          <h3>DM</h3>
+          <div id="fileList11"></div>
+          <h3>DS</h3>
+          <div id="fileList12"></div>
+        </div>
+      </div>
     </main>
     <script>
       // Fonction pour récupérer la liste des fichiers depuis le serveur pour un dossier spécifié
       function fetchFileList(folder, fileListId) {
         fetch("./php/get_file_list.php?folder=" + folder)
-          .then((response) => response.json())
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erreur lors de la récupération des fichiers.");
+            }
+            return response.json();
+          })
           .then((data) => {
             const fileListElement = document.getElementById(fileListId);
             fileListElement.innerHTML = "";
 
-            data.forEach((file) => {
-              const listItem = document.createElement("li");
-              const link = document.createElement("a");
-              link.href = "uploads/" + folder + "/" + file;
-              link.textContent = file;
-              link.style.marginRight = "10px";
+            if (data.length === 0) {
+              const noFileListItem = document.createElement("li");
+              noFileListItem.textContent = "Prochainement !";
+              fileListElement.appendChild(noFileListItem);
+            } else {
+              data.forEach((file) => {
+                const listItem = document.createElement("li");
+                const link = document.createElement("a");
+                link.href = "uploads/" + folder + "/" + file;
+                link.textContent = file;
+                link.style.marginRight = "10px";
 
-              listItem.appendChild(link);
+                listItem.appendChild(link);
 
-              // Crée une balise <img> avec l'icône du bouton de téléchargement
-              const downloadIcon = document.createElement("img");
-              downloadIcon.src = "./assets/icones/iconDL.svg";
-              downloadIcon.alt = "Télécharger";
-              downloadIcon.classList.add("download-icon");
-              listItem.appendChild(downloadIcon);
-              fileListElement.appendChild(listItem);
+                // Crée une balise <img> avec l'icône du bouton de téléchargement
+                const downloadIcon = document.createElement("img");
+                downloadIcon.src = "./assets/icones/iconDL.svg";
+                downloadIcon.alt = "Télécharger";
+                downloadIcon.classList.add("download-icon");
+                listItem.appendChild(downloadIcon);
+                fileListElement.appendChild(listItem);
 
-              downloadIcon.addEventListener("click", () => {
-                downloadFile(link.href, file);
+                downloadIcon.addEventListener("click", () => {
+                  downloadFile(link.href, file);
+                });
               });
-            });
+            }
+          })
+          .catch((error) => {
+            const fileListElement = document.getElementById(fileListId);
+            fileListElement.innerHTML = "";
+            const noFileListItem = document.createElement("li");
+            noFileListItem.textContent = "Prochainement !";
+            fileListElement.appendChild(noFileListItem);
           });
       }
+
       function downloadFile(url, filename) {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
@@ -95,6 +144,16 @@
       fetchFileList("uploads2", "fileList2");
       fetchFileList("uploads3", "fileList3");
       fetchFileList("uploads4", "fileList4");
+      fetchFileList("uploads5", "fileList5");
+      fetchFileList("uploads6", "fileList6");
+      fetchFileList("uploads7", "fileList7");
+      fetchFileList("uploads8", "fileList8");
+      fetchFileList("uploads9", "fileList9");
+      fetchFileList("uploads10", "fileList10");
+      fetchFileList("uploads11", "fileList11");
+      fetchFileList("uploads12", "fileList12");
     </script>
+    <script src="./assets/js/jquery-3.7.0.min.js"></script>
+    <script src="./assets/js/script.js"></script>
   </body>
 </html>
