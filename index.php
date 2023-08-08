@@ -20,6 +20,7 @@ try {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mathématiques - Bastien C.</title>
+  <meta name="description" content="Bienvenue sur les cours de mathématiques de Bastien Courseaux. Découvrez des ressources pédagogiques pour les cours, les exercices, les devoirs et plus encore." />
   <link rel="icon" href="./assets/images/avatar.png" type="image/png">
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
@@ -34,44 +35,21 @@ try {
       </div>
       <?php
       if (isset($_SESSION['email'])) {
-      ?> <a href="./admin.php"><img src="./assets/icones/sync.svg" alt="connexion" class="log" /></a> <a href="./php/deconnexion.php"><img src="./assets/icones/logout.svg" alt="deconnexion" class="log2" title="Déconnexion"/></a> <?php
-                                                                                                      } else { ?>
-        <img src="./assets/icones/login.svg" alt="connexion" class="log" id="btnOpenModal" title="Connexion"/>
+      ?> <a href="./admin.php"><img src="./assets/icones/sync.svg" alt="connexion" class="log" /></a> <a href="./php/deconnexion.php"><img src="./assets/icones/logout.svg" alt="deconnexion" class="log2" title="Déconnexion" /></a> <?php
+                                                                                                                                                                                                                                    } else { ?>
+        <img src="./assets/icones/login.svg" alt="connexion" class="log" id="btnOpenModal" title="Connexion" />
         <!-- Le modal de connexion -->
+        <?php include_once "./php/process_login.php"; ?>
         <div id="modal" class="modal">
           <div class="modal-content">
             <span class="close" id="btnCloseModal">&times;</span>
             <h4>Connexion</h4>
             <form id="loginForm" method="POST">
-              <input type="email" id="email" name="email" required>
-              <input type="password" id="password" name="password" required>
+              <input type="email" id="email" name="email" maxlength="200" required>
+              <input type="password" id="password" name="password" maxlength="200" required>
               <input type="submit" value="Se connecter" name="connecter">
-            <?php } ?>
-            <?php
-            if (!empty($_POST['connecter'])) {
-              $mail = htmlspecialchars($_POST['email']);
-              $email = strtolower($mail);
-              $password = htmlspecialchars($_POST['password']);
-              include_once "./php/connexionbdd.php";
-              $sql = "SELECT * FROM connexion WHERE mail = :email AND mdp = :mdp";
-              $stmt = $connexion->prepare($sql);
-              $stmt->bindParam(':email', $email);
-              $stmt->bindParam(':mdp', $password);
-              $stmt->execute();
-              if ($stmt->rowCount() == 1) {
-                // L'utilisateur est authentifié avec succès, vous pouvez effectuer des actions supplémentaires ici si nécessaire.
-                $_SESSION['email'] = $email;
-                header("Location: ./admin.php");
-                exit(); // Assurez-vous d'ajouter exit() pour terminer l'exécution du script ici.
-              } else {
-                // L'authentification a échoué, gérer l'erreur comme vous le souhaitez.
-                // echo "Authentification échouée. Veuillez vérifier vos informations d'identification.";
-              echo '<script>$("#modal").hide()</script>';
-              }
-            }
-
-            ?>
             </form>
+          <?php } ?>
           </div>
         </div>
     </div>

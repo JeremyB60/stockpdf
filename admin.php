@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['email'])) {
+  header("Location: ./index.php");
+  exit();
+}
 
 include_once "./php/connexionbdd.php";
 
@@ -35,7 +39,7 @@ try {
         <p>Gérer mes fichiers</p>
       </div>
       <a href="./index.php"><img src="./assets/icones/sync.svg" alt="retour" class="log" /></a>
-      <a href="./php/deconnexion.php"><img src="./assets/icones/logout.svg" alt="deconnexion" class="log2" title="Déconnexion"/></a>
+      <a href="./php/deconnexion.php"><img src="./assets/icones/logout.svg" alt="deconnexion" class="log2" title="Déconnexion" /></a>
     </div>
   </header>
   <main class="dropzoneAdmin">
