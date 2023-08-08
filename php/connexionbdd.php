@@ -32,9 +32,12 @@ try {
         nom VARCHAR(50) NOT NULL
     ) CHARACTER SET utf8 COLLATE utf8_bin"; //spécifie le jeu de caractère utilisé
     $connexion->exec($sql);
-}
-
-catch (PDOException $e) { //RECUPERATION DES ERREURS DANS LE JOURNAL error.log
+    $sql = "CREATE TABLE IF NOT EXISTS connexion (
+        mail VARCHAR(200) NOT NULL,
+        mdp VARCHAR(200) NOT NULL
+    ) CHARACTER SET utf8 COLLATE utf8_bin"; //spécifie le jeu de caractère utilisé
+    $connexion->exec($sql);
+} catch (PDOException $e) { //RECUPERATION DES ERREURS DANS LE JOURNAL error.log
     $fichier = fopen("error.log", "a+");  //ouvre le fichier en mode lecture/écriture avec le pointeur à la fin
     setlocale(LC_TIME, 'fr_FR'); //localisation pour afficher l'heure selon les conventions françaises
     date_default_timezone_set('Europe/Paris'); //fuseau horaire

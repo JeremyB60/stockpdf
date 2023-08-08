@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include_once "./php/connexionbdd.php";
 
 try {
@@ -30,7 +32,48 @@ try {
         <h1>Bastien Courseaux</h1>
         <p>Mes cours de&nbsp;mathématiques</p>
       </div>
-      <a href="./admin.php"><img src="./assets/icones/login.svg" alt="connexion" class="log" /></a>
+      <?php
+      if (isset($_SESSION['email'])) {
+      ?> <a href="./admin.php"><img src="./assets/icones/sync.svg" alt="connexion" class="log" /></a> <a href="./php/deconnexion.php"><img src="./assets/icones/logout.svg" alt="deconnexion" class="log2" title="Déconnexion"/></a> <?php
+                                                                                                      } else { ?>
+        <img src="./assets/icones/login.svg" alt="connexion" class="log" id="btnOpenModal" title="Connexion"/>
+        <!-- Le modal de connexion -->
+        <div id="modal" class="modal">
+          <div class="modal-content">
+            <span class="close" id="btnCloseModal">&times;</span>
+            <h4>Connexion</h4>
+            <form id="loginForm" method="POST">
+              <input type="email" id="email" name="email" required>
+              <input type="password" id="password" name="password" required>
+              <input type="submit" value="Se connecter" name="connecter">
+            <?php } ?>
+            <?php
+            if (!empty($_POST['connecter'])) {
+              $mail = htmlspecialchars($_POST['email']);
+              $email = strtolower($mail);
+              $password = htmlspecialchars($_POST['password']);
+              include_once "./php/connexionbdd.php";
+              $sql = "SELECT * FROM connexion WHERE mail = :email AND mdp = :mdp";
+              $stmt = $connexion->prepare($sql);
+              $stmt->bindParam(':email', $email);
+              $stmt->bindParam(':mdp', $password);
+              $stmt->execute();
+              if ($stmt->rowCount() == 1) {
+                // L'utilisateur est authentifié avec succès, vous pouvez effectuer des actions supplémentaires ici si nécessaire.
+                $_SESSION['email'] = $email;
+                header("Location: ./admin.php");
+                exit(); // Assurez-vous d'ajouter exit() pour terminer l'exécution du script ici.
+              } else {
+                // L'authentification a échoué, gérer l'erreur comme vous le souhaitez.
+                // echo "Authentification échouée. Veuillez vérifier vos informations d'identification.";
+              echo '<script>$("#modal").hide()</script>';
+              }
+            }
+
+            ?>
+            </form>
+          </div>
+        </div>
     </div>
   </header>
   <main>

@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include_once "./php/connexionbdd.php";
 
 try {
@@ -33,6 +35,7 @@ try {
         <p>Gérer mes fichiers</p>
       </div>
       <a href="./index.php"><img src="./assets/icones/sync.svg" alt="retour" class="log" /></a>
+      <a href="./php/deconnexion.php"><img src="./assets/icones/logout.svg" alt="deconnexion" class="log2" title="Déconnexion"/></a>
     </div>
   </header>
   <main class="dropzoneAdmin">
@@ -40,7 +43,7 @@ try {
 
     <div class="dropzoneContainer containerAdmin">
       <div class="dropzoneHeader">
-        <h2><?php echo htmlspecialchars($results[0]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse">
+        <h2><?php echo htmlspecialchars($results[0]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
         <form method="POST" class="editForm">
           <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[0]['nom']); ?>">
           <input type="submit" value="Modifier" name="modifier">
@@ -90,7 +93,7 @@ try {
 
     <div class="dropzoneContainer containerAdmin">
       <div class="dropzoneHeader">
-        <h2><?php echo htmlspecialchars($results[1]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse">
+        <h2><?php echo htmlspecialchars($results[1]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
         <form method="POST" class="editForm">
           <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[1]['nom']); ?>">
           <input type="submit" value="Modifier" name="modifier1">
@@ -140,7 +143,7 @@ try {
 
     <div class="dropzoneContainer containerAdmin">
       <div class="dropzoneHeader">
-        <h2><?php echo htmlspecialchars($results[2]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse">
+        <h2><?php echo htmlspecialchars($results[2]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
         <form method="POST" class="editForm">
           <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[2]['nom']); ?>">
           <input type="submit" value="Modifier" name="modifier2">
@@ -190,7 +193,7 @@ try {
 
     <div class="dropzoneContainer containerAdmin">
       <div class="dropzoneHeader">
-        <h2><?php echo htmlspecialchars($results[3]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse">
+        <h2><?php echo htmlspecialchars($results[3]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
         <form method="POST" class="editForm">
           <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[3]['nom']); ?>">
           <input type="submit" value="Modifier" name="modifier4">

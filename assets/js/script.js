@@ -31,4 +31,32 @@ $(document).ready(function () {
   $(".editClasse").click(function () {
     $(this).siblings(".editForm").slideToggle();
   });
+
+  //CONNEXION
+  // Fonction pour ouvrir le modal
+  $("#btnOpenModal").click(function () {
+    $("#modal").show();
+  });
+
+  // Fonction pour fermer le modal
+  $("#btnCloseModal").click(function () {
+    $("#modal").hide();
+  });
+
+  // // Fonction pour traiter le formulaire de connexion
+  // $("#loginForm").submit(function (event) {
+  //   event.preventDefault();
+  //   const email = $("#email").val();
+  //   const password = $("#password").val();
+
+  //   // Ici, vous pouvez envoyer le formulaire à votre backend pour vérification et traitement.
+  //   // Vous pouvez utiliser Ajax, fetch, ou tout autre moyen de communication avec votre serveur.
+
+  //   // Pour cet exemple, nous allons simplement afficher les valeurs saisies dans la console.
+  //   console.log("Email:", email);
+  //   console.log("Mot de passe:", password);
+
+  //   // Fermer le modal après traitement du formulaire (vous pouvez adapter cette logique selon votre besoin).
+  //   $("#modal").hide();
+  // });
 });
