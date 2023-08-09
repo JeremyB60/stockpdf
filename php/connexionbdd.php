@@ -1,8 +1,8 @@
 <?php
 //VARIABLES DE CONNEXION
-$servername = "localhost";
-$username = "root";
-$dbname = "stockpdf";
+$servername = "";
+$username = "";
+$dbname = "";
 $password = "";
 
 //TESTE LA CONNEXION ET SI N'EXISTE PAS CREATION BDD
@@ -33,7 +33,7 @@ try {
     ) CHARACTER SET utf8 COLLATE utf8_bin"; //spécifie le jeu de caractère utilisé
     $connexion->exec($sql);
     $sql = "CREATE TABLE IF NOT EXISTS connexion (
-        mail VARCHAR(200) NOT NULL,
+        identifiant VARCHAR(200) NOT NULL,
         mdp VARCHAR(200) NOT NULL
     ) CHARACTER SET utf8 COLLATE utf8_bin"; //spécifie le jeu de caractère utilisé
     $connexion->exec($sql);

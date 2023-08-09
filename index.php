@@ -19,6 +19,7 @@ try {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate"> -->
   <title>Mathématiques - Bastien C.</title>
   <meta name="description" content="Bienvenue sur les cours de mathématiques de Bastien Courseaux. Découvrez des ressources pédagogiques pour les cours, les exercices, les devoirs et plus encore." />
   <link rel="icon" href="./assets/images/avatar.png" type="image/png">
@@ -34,7 +35,7 @@ try {
         <p>Mes cours de&nbsp;mathématiques</p>
       </div>
       <?php
-      if (isset($_SESSION['email'])) {
+      if (isset($_SESSION['identifiant'])) {
       ?> <a href="./admin.php"><img src="./assets/icones/sync.svg" alt="connexion" class="log" /></a> <a href="./php/deconnexion.php"><img src="./assets/icones/logout.svg" alt="deconnexion" class="log2" title="Déconnexion" /></a> <?php
                                                                                                                                                                                                                                     } else { ?>
         <img src="./assets/icones/login.svg" alt="connexion" class="log" id="btnOpenModal" title="Connexion" />
@@ -45,8 +46,8 @@ try {
             <span class="close" id="btnCloseModal">&times;</span>
             <h4>Connexion</h4>
             <form id="loginForm" method="POST">
-              <input type="email" id="email" name="email" maxlength="200" required>
-              <input type="password" id="password" name="password" maxlength="200" required>
+              <input type="text" name="identifiant" maxlength="200" placeholder="**********" required>
+              <input type="password" name="password" maxlength="200" placeholder="**********" required>
               <input type="submit" value="Se connecter" name="connecter">
             </form>
           <?php } ?>

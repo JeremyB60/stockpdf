@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['identifiant'])) {
   header("Location: ./index.php");
   exit();
 }
@@ -23,6 +23,7 @@ try {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate"> -->
   <title>Mathématiques - Bastien C.</title>
   <link rel="icon" href="./assets/images/avatar.png" type="image/png">
   <link rel="stylesheet" href="./assets/css/style.css" />

@@ -1,20 +1,20 @@
 <?php
 
 if (!empty($_POST['connecter'])) {
-    $mail = htmlspecialchars($_POST['email']);
-    $email = strtolower($mail);
+    $identif = htmlspecialchars($_POST['identifiant']);
+    $identifiant = strtolower($identif);
     $password = htmlspecialchars($_POST['password']);
-    
+
     include_once "./php/connexionbdd.php";
-    
-    $sql = "SELECT * FROM connexion WHERE mail = :email AND mdp = :mdp";
+
+    $sql = "SELECT * FROM connexion WHERE identifiant = :identifiant";
     $stmt = $connexion->prepare($sql);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':mdp', $password);
+    $stmt->bindParam(':identifiant', $identifiant);
     $stmt->execute();
-    
-    if ($stmt->rowCount() == 1) {
-        $_SESSION['email'] = $email;
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($user && password_verify($password, $user['mdp'])) {
+        $_SESSION['identifiant'] = $identifiant;
         header("Location: ./admin.php");
         exit();
     } else {
