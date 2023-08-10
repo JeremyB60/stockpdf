@@ -22,7 +22,7 @@ try {
   <title>Mathématiques - Bastien C.</title>
   <meta name="description" content="Bienvenue sur les cours de mathématiques de Bastien Courseaux. Découvrez des ressources pédagogiques pour les cours, les exercices, les devoirs et plus encore." />
   <link rel="icon" href="./assets/images/avatar.png" type="image/png">
-  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./assets/css/style.css?v=4" />
 </head>
 
 <body>
