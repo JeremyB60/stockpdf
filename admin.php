@@ -23,7 +23,6 @@ try {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate"> -->
   <title>Mathématiques - Bastien C.</title>
   <link rel="icon" href="./assets/images/avatar.png" type="image/png">
   <link rel="stylesheet" href="./assets/css/style.css" />
@@ -32,220 +31,225 @@ try {
 </head>
 
 <body>
-  <header>
-    <div class="avatar avatarAdmin">
-      <img src="./assets/images/avatar.png" alt="Avatar" class="avatarImg" />
-      <div>
-        <h1>Administrateur</h1>
-        <p>Gérer mes fichiers</p>
+  <div class="contenu">
+    <header>
+      <div class="avatar avatarAdmin">
+        <img src="./assets/images/avatar.png" alt="Avatar" class="avatarImg" />
+        <div>
+          <h1>Administrateur</h1>
+          <p>Gérer mes fichiers</p>
+        </div>
+        <a href="./index.php"><img src="./assets/icones/sync.svg" alt="retour" class="log" /></a>
+        <a href="./php/deconnexion.php"><img src="./assets/icones/logout.svg" alt="deconnexion" class="log2" title="Déconnexion" /></a>
       </div>
-      <a href="./index.php"><img src="./assets/icones/sync.svg" alt="retour" class="log" /></a>
-      <a href="./php/deconnexion.php"><img src="./assets/icones/logout.svg" alt="deconnexion" class="log2" title="Déconnexion" /></a>
-    </div>
-  </header>
-  <main class="dropzoneAdmin">
-    <!-- Dropzone -->
+    </header>
+    <main class="dropzoneAdmin">
+      <!-- Dropzone -->
 
-    <div class="dropzoneContainer containerAdmin">
-      <div class="dropzoneHeader">
-        <h2><?php echo htmlspecialchars($results[0]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
-        <form method="POST" class="editForm">
-          <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[0]['nom']); ?>">
-          <input type="submit" value="Modifier" name="modifier">
-          <?php
-          if (!empty($_POST['modifier'])) {
-            $nom = $_POST['nom'];
-            $sql = "UPDATE classes SET nom = :nom WHERE idclasse = '1'";
-            $stmt = $connexion->prepare($sql);
-            $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
-            $stmt->execute();
-            echo "<meta http-equiv='refresh' content='0'>";
-            exit();
-          } ?>
-        </form>
+      <div class="dropzoneContainer containerAdmin">
+        <div class="dropzoneHeader">
+          <h2><?php echo htmlspecialchars($results[0]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
+          <form method="POST" class="editForm">
+            <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[0]['nom']); ?>">
+            <input type="submit" value="Modifier" name="modifier">
+            <?php
+            if (!empty($_POST['modifier'])) {
+              $nom = $_POST['nom'];
+              $sql = "UPDATE classes SET nom = :nom WHERE idclasse = '1'";
+              $stmt = $connexion->prepare($sql);
+              $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+              $stmt->execute();
+              echo "<meta http-equiv='refresh' content='0'>";
+              exit();
+            } ?>
+          </form>
+        </div>
+        <div class="hide">
+          <h3>Cours</h3>
+          <div class="dropzone" id="dropzone1">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList1"></ul>
+          <h3>Exercices</h3>
+          <div class="dropzone" id="dropzone2">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList2"></ul>
+          <h3>DM</h3>
+          <div class="dropzone" id="dropzone3">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList3"></ul>
+          <h3>DS</h3>
+          <div class="dropzone" id="dropzone4">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList4"></ul>
+        </div>
       </div>
-      <div class="hide">
-        <h3>Cours</h3>
-        <div class="dropzone" id="dropzone1">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList1"></ul>
-        <h3>Exercices</h3>
-        <div class="dropzone" id="dropzone2">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList2"></ul>
-        <h3>DM</h3>
-        <div class="dropzone" id="dropzone3">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList3"></ul>
-        <h3>DS</h3>
-        <div class="dropzone" id="dropzone4">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList4"></ul>
-      </div>
-    </div>
 
-    <div class="dropzoneContainer containerAdmin">
-      <div class="dropzoneHeader">
-        <h2><?php echo htmlspecialchars($results[1]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
-        <form method="POST" class="editForm">
-          <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[1]['nom']); ?>">
-          <input type="submit" value="Modifier" name="modifier1">
-          <?php
-          if (!empty($_POST['modifier1'])) {
-            $nom = $_POST['nom'];
-            $sql = "UPDATE classes SET nom = :nom WHERE idclasse = '2'";
-            $stmt = $connexion->prepare($sql);
-            $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
-            $stmt->execute();
-            echo "<meta http-equiv='refresh' content='0'>";
-            exit();
-          } ?>
-        </form>
+      <div class="dropzoneContainer containerAdmin">
+        <div class="dropzoneHeader">
+          <h2><?php echo htmlspecialchars($results[1]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
+          <form method="POST" class="editForm">
+            <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[1]['nom']); ?>">
+            <input type="submit" value="Modifier" name="modifier1">
+            <?php
+            if (!empty($_POST['modifier1'])) {
+              $nom = $_POST['nom'];
+              $sql = "UPDATE classes SET nom = :nom WHERE idclasse = '2'";
+              $stmt = $connexion->prepare($sql);
+              $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+              $stmt->execute();
+              echo "<meta http-equiv='refresh' content='0'>";
+              exit();
+            } ?>
+          </form>
+        </div>
+        <div class="hide">
+          <h3>Cours</h3>
+          <div class="dropzone" id="dropzone5">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList5"></ul>
+          <h3>Exercices</h3>
+          <div class="dropzone" id="dropzone6">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList6"></ul>
+          <h3>DM</h3>
+          <div class="dropzone" id="dropzone7">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList7"></ul>
+          <h3>DS</h3>
+          <div class="dropzone" id="dropzone8">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList8"></ul>
+        </div>
       </div>
-      <div class="hide">
-        <h3>Cours</h3>
-        <div class="dropzone" id="dropzone5">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList5"></ul>
-        <h3>Exercices</h3>
-        <div class="dropzone" id="dropzone6">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList6"></ul>
-        <h3>DM</h3>
-        <div class="dropzone" id="dropzone7">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList7"></ul>
-        <h3>DS</h3>
-        <div class="dropzone" id="dropzone8">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList8"></ul>
-      </div>
-    </div>
 
-    <div class="dropzoneContainer containerAdmin">
-      <div class="dropzoneHeader">
-        <h2><?php echo htmlspecialchars($results[2]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
-        <form method="POST" class="editForm">
-          <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[2]['nom']); ?>">
-          <input type="submit" value="Modifier" name="modifier2">
-          <?php
-          if (!empty($_POST['modifier2'])) {
-            $nom = $_POST['nom'];
-            $sql = "UPDATE classes SET nom = :nom WHERE idclasse = '3'";
-            $stmt = $connexion->prepare($sql);
-            $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
-            $stmt->execute();
-            echo "<meta http-equiv='refresh' content='0'>";
-            exit();
-          } ?>
-        </form>
+      <div class="dropzoneContainer containerAdmin">
+        <div class="dropzoneHeader">
+          <h2><?php echo htmlspecialchars($results[2]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
+          <form method="POST" class="editForm">
+            <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[2]['nom']); ?>">
+            <input type="submit" value="Modifier" name="modifier2">
+            <?php
+            if (!empty($_POST['modifier2'])) {
+              $nom = $_POST['nom'];
+              $sql = "UPDATE classes SET nom = :nom WHERE idclasse = '3'";
+              $stmt = $connexion->prepare($sql);
+              $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+              $stmt->execute();
+              echo "<meta http-equiv='refresh' content='0'>";
+              exit();
+            } ?>
+          </form>
+        </div>
+        <div class="hide">
+          <h3>Cours</h3>
+          <div class="dropzone" id="dropzone9">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList9"></ul>
+          <h3>Exercices</h3>
+          <div class="dropzone" id="dropzone10">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList10"></ul>
+          <h3>DM</h3>
+          <div class="dropzone" id="dropzone11">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList11"></ul>
+          <h3>DS</h3>
+          <div class="dropzone" id="dropzone12">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList12"></ul>
+        </div>
       </div>
-      <div class="hide">
-        <h3>Cours</h3>
-        <div class="dropzone" id="dropzone9">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList9"></ul>
-        <h3>Exercices</h3>
-        <div class="dropzone" id="dropzone10">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList10"></ul>
-        <h3>DM</h3>
-        <div class="dropzone" id="dropzone11">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList11"></ul>
-        <h3>DS</h3>
-        <div class="dropzone" id="dropzone12">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList12"></ul>
-      </div>
-    </div>
 
-    <div class="dropzoneContainer containerAdmin">
-      <div class="dropzoneHeader">
-        <h2><?php echo htmlspecialchars($results[3]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
-        <form method="POST" class="editForm">
-          <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[3]['nom']); ?>">
-          <input type="submit" value="Modifier" name="modifier4">
-          <?php
-          if (!empty($_POST['modifier4'])) {
-            $nom = $_POST['nom'];
-            $sql = "UPDATE classes SET nom = :nom WHERE idclasse = '4'";
-            $stmt = $connexion->prepare($sql);
-            $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
-            $stmt->execute();
-            echo "<meta http-equiv='refresh' content='0'>";
-            exit();
-          } ?>
-        </form>
+      <div class="dropzoneContainer containerAdmin">
+        <div class="dropzoneHeader">
+          <h2><?php echo htmlspecialchars($results[3]['nom']); ?></h2> <img src="./assets/icones/edit.svg" alt="editer" class="editClasse" title="Editer">
+          <form method="POST" class="editForm">
+            <input type="text" name="nom" maxlength="200" value="<?php echo htmlspecialchars($results[3]['nom']); ?>">
+            <input type="submit" value="Modifier" name="modifier4">
+            <?php
+            if (!empty($_POST['modifier4'])) {
+              $nom = $_POST['nom'];
+              $sql = "UPDATE classes SET nom = :nom WHERE idclasse = '4'";
+              $stmt = $connexion->prepare($sql);
+              $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+              $stmt->execute();
+              echo "<meta http-equiv='refresh' content='0'>";
+              exit();
+            } ?>
+          </form>
+        </div>
+        <div class="hide">
+          <h3>Cours</h3>
+          <div class="dropzone" id="dropzone13">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList13"></ul>
+          <h3>Exercices</h3>
+          <div class="dropzone" id="dropzone14">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList14"></ul>
+          <h3>DM</h3>
+          <div class="dropzone" id="dropzone15">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList15"></ul>
+          <h3>DS</h3>
+          <div class="dropzone" id="dropzone16">
+            <div class="dz-message">
+              Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
+            </div>
+          </div>
+          <ul id="fileList16"></ul>
+        </div>
       </div>
-      <div class="hide">
-        <h3>Cours</h3>
-        <div class="dropzone" id="dropzone13">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList13"></ul>
-        <h3>Exercices</h3>
-        <div class="dropzone" id="dropzone14">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList14"></ul>
-        <h3>DM</h3>
-        <div class="dropzone" id="dropzone15">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList15"></ul>
-        <h3>DS</h3>
-        <div class="dropzone" id="dropzone16">
-          <div class="dz-message">
-            Glissez-déposez les fichiers ici ou cliquez pour les sélectionner.
-          </div>
-        </div>
-        <ul id="fileList16"></ul>
-      </div>
-    </div>
-  </main>
+    </main>
+  </div>
+  <footer class="pied-de-page pdpadmin">
+    <p>Année scolaire <span id="anneeScolaire"></span></p>
+  </footer>
 
   <script>
     // Fonction pour initialiser Dropzone pour chaque élément avec la classe "dropzone"

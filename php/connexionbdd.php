@@ -1,8 +1,8 @@
 <?php
 //VARIABLES DE CONNEXION
-$servername = "";
-$username = "";
-$dbname = "";
+$servername = "localhost";
+$username = "root";
+$dbname = "stockpdf";
 $password = "";
 
 //TESTE LA CONNEXION ET SI N'EXISTE PAS CREATION BDD

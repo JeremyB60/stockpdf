@@ -40,4 +40,12 @@ $(document).ready(function () {
   $("#btnCloseModal").click(function () {
     $("#modal").hide();
   });
+
+  //Footer
+  const anneeScolaireElement = document.getElementById("anneeScolaire");
+  const dateActuelle = new Date();
+  const annee = dateActuelle.getFullYear();
+  const anneeScolaireDebut = dateActuelle.getMonth() >= 7 ? annee : annee - 1;
+  const anneeScolaireFin = anneeScolaireDebut + 1;
+  anneeScolaireElement.textContent = `${anneeScolaireDebut}/${anneeScolaireFin}`;
 });

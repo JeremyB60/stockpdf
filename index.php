@@ -14,12 +14,11 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate"> -->
   <title>Mathématiques - Bastien C.</title>
   <meta name="description" content="Bienvenue sur les cours de mathématiques de Bastien Courseaux. Découvrez des ressources pédagogiques pour les cours, les exercices, les devoirs et plus encore." />
   <link rel="icon" href="./assets/images/avatar.png" type="image/png">
@@ -27,18 +26,19 @@ try {
 </head>
 
 <body>
-  <header>
-    <div class="avatar">
-      <img src="./assets/images/avatar.png" alt="Avatar" class="avatarImg" />
-      <div>
-        <h1>Bastien Courseaux</h1>
-        <p>Mes cours de&nbsp;mathématiques</p>
-      </div>
-      <?php
-      if (isset($_SESSION['identifiant'])) {
-      ?> <a href="./admin.php"><img src="./assets/icones/sync.svg" alt="connexion" class="log" /></a> <a href="./php/deconnexion.php"><img src="./assets/icones/logout.svg" alt="deconnexion" class="log2" title="Déconnexion" /></a> <?php
-                                                                                                                                                                                                                                    } else { ?>
-        <img src="./assets/icones/login.svg" alt="connexion" class="log" id="btnOpenModal" title="Connexion" />
+  <div class="contenu">
+    <header>
+      <div class="avatar">
+        <img src="./assets/images/avatar.png" alt="Avatar" class="avatarImg" />
+        <div>
+          <h1>Bastien Courseaux</h1>
+          <p>Mes cours de&nbsp;mathématiques</p>
+        </div>
+        <?php
+        if (isset($_SESSION['identifiant'])) { ?>
+          <a href="./admin.php"><img src="./assets/icones/sync.svg" alt="connexion" class="log" /></a> <a href="./php/deconnexion.php"><img src="./assets/icones/logout.svg" alt="deconnexion" class="log2" title="Déconnexion" /></a> <?php
+                                                                                                                                                                                                                                      } else { ?>
+          <img src="./assets/icones/login.svg" alt="connexion" class="log" id="btnOpenModal" title="Connexion" /> <?php } ?>
         <!-- Le modal de connexion -->
         <?php include_once "./php/process_login.php"; ?>
         <div id="modal" class="modal">
@@ -50,76 +50,79 @@ try {
               <input type="password" name="password" maxlength="200" placeholder="**********" required>
               <input type="submit" value="Se connecter" name="connecter">
             </form>
-          <?php } ?>
           </div>
         </div>
-    </div>
-  </header>
-  <main>
-    <?php if (!empty($results[0]['nom'])) : ?>
-      <div class="dropzoneContainer containerUtilisateur">
-        <h2><?php echo htmlspecialchars($results[0]['nom']); ?> <span class="arrow">▶</span></h2>
-        <div class="hide">
-          <h3>Cours</h3>
-          <div id="fileList1"></div>
-          <h3>Exercices</h3>
-          <div id="fileList2"></div>
-          <h3>DM</h3>
-          <div id="fileList3"></div>
-          <h3>DS</h3>
-          <div id="fileList4"></div>
-        </div>
       </div>
-    <?php endif; ?>
+    </header>
+    <main>
+      <?php if (!empty($results[0]['nom'])) : ?>
+        <div class="dropzoneContainer containerUtilisateur">
+          <h2><?php echo htmlspecialchars($results[0]['nom']); ?> <span class="arrow">▶</span></h2>
+          <div class="hide">
+            <h3>Cours</h3>
+            <div id="fileList1"></div>
+            <h3>Exercices</h3>
+            <div id="fileList2"></div>
+            <h3>DM</h3>
+            <div id="fileList3"></div>
+            <h3>DS</h3>
+            <div id="fileList4"></div>
+          </div>
+        </div>
+      <?php endif; ?>
 
-    <?php if (!empty($results[1]['nom'])) : ?>
-      <div class="dropzoneContainer containerUtilisateur">
-        <h2><?php echo htmlspecialchars($results[1]['nom']); ?> <span class="arrow">▶</span></h2>
-        <div class="hide">
-          <h3>Cours</h3>
-          <div id="fileList5"></div>
-          <h3>Exercices</h3>
-          <div id="fileList6"></div>
-          <h3>DM</h3>
-          <div id="fileList7"></div>
-          <h3>DS</h3>
-          <div id="fileList8"></div>
+      <?php if (!empty($results[1]['nom'])) : ?>
+        <div class="dropzoneContainer containerUtilisateur">
+          <h2><?php echo htmlspecialchars($results[1]['nom']); ?> <span class="arrow">▶</span></h2>
+          <div class="hide">
+            <h3>Cours</h3>
+            <div id="fileList5"></div>
+            <h3>Exercices</h3>
+            <div id="fileList6"></div>
+            <h3>DM</h3>
+            <div id="fileList7"></div>
+            <h3>DS</h3>
+            <div id="fileList8"></div>
+          </div>
         </div>
-      </div>
-    <?php endif; ?>
+      <?php endif; ?>
 
-    <?php if (!empty($results[2]['nom'])) : ?>
-      <div class="dropzoneContainer containerUtilisateur">
-        <h2><?php echo htmlspecialchars($results[2]['nom']); ?> <span class="arrow">▶</span></h2>
-        <div class="hide">
-          <h3>Cours</h3>
-          <div id="fileList9"></div>
-          <h3>Exercices</h3>
-          <div id="fileList10"></div>
-          <h3>DM</h3>
-          <div id="fileList11"></div>
-          <h3>DS</h3>
-          <div id="fileList12"></div>
+      <?php if (!empty($results[2]['nom'])) : ?>
+        <div class="dropzoneContainer containerUtilisateur">
+          <h2><?php echo htmlspecialchars($results[2]['nom']); ?> <span class="arrow">▶</span></h2>
+          <div class="hide">
+            <h3>Cours</h3>
+            <div id="fileList9"></div>
+            <h3>Exercices</h3>
+            <div id="fileList10"></div>
+            <h3>DM</h3>
+            <div id="fileList11"></div>
+            <h3>DS</h3>
+            <div id="fileList12"></div>
+          </div>
         </div>
-      </div>
-    <?php endif; ?>
+      <?php endif; ?>
 
-    <?php if (!empty($results[3]['nom'])) : ?>
-      <div class="dropzoneContainer containerUtilisateur">
-        <h2><?php echo htmlspecialchars($results[3]['nom']); ?> <span class="arrow">▶</span></h2>
-        <div class="hide">
-          <h3>Cours</h3>
-          <div id="fileList13"></div>
-          <h3>Exercices</h3>
-          <div id="fileList14"></div>
-          <h3>DM</h3>
-          <div id="fileList15"></div>
-          <h3>DS</h3>
-          <div id="fileList16"></div>
+      <?php if (!empty($results[3]['nom'])) : ?>
+        <div class="dropzoneContainer containerUtilisateur">
+          <h2><?php echo htmlspecialchars($results[3]['nom']); ?> <span class="arrow">▶</span></h2>
+          <div class="hide">
+            <h3>Cours</h3>
+            <div id="fileList13"></div>
+            <h3>Exercices</h3>
+            <div id="fileList14"></div>
+            <h3>DM</h3>
+            <div id="fileList15"></div>
+            <h3>DS</h3>
+            <div id="fileList16"></div>
+          </div>
         </div>
-      </div>
-    <?php endif; ?>
-  </main>
+      <?php endif; ?>
+    </main>
+  </div>
+  <footer class="pied-de-page">
+    <p>Année scolaire <span id="anneeScolaire"></span></p>
+  </footer>
   <script>
     // Fonction pour récupérer la liste des fichiers depuis le serveur pour un dossier spécifié
     function fetchFileList(folder, fileListId) {

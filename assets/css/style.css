@@ -4,9 +4,35 @@
 }
 
 body {
+  display: flex;
+  height: 100%;
   font-family: exo, sans-serif;
+  flex-direction: column;
+  min-height: 100vh;
   margin: 0;
-  padding: 20px;
+}
+
+.contenu {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: auto;
+}
+
+footer {
+  flex-shrink: 0;
+  background-color: #eee;
+  box-shadow: 0 0 10px #0000004d;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.pdpadmin {
+  background-color: #d1e3ec;
+  box-shadow: 0 0 10px #a098eb4d;
 }
 
 /* Styles pour le header */
@@ -41,7 +67,7 @@ body {
 
 .avatarImg {
   width: 150px;
-  margin: 0 0px;
+  padding: 5px;
 }
 
 /* Styles dropzone */
@@ -49,6 +75,8 @@ body {
 .dropzoneContainer {
   background-color: #eee;
   box-shadow: 0 0 10px #0000004d;
+  width: 98%;
+  margin: auto;
 }
 
 .containerAdmin {
@@ -57,7 +85,7 @@ body {
 }
 
 h2 {
-  padding: 5px 0;
+  padding: 5px;
 }
 
 .dropzoneAdmin h2 {
@@ -77,6 +105,7 @@ h2 {
 
 h3 {
   margin: 0 !important;
+  padding: 0 5px;
 }
 
 .dropzone {
@@ -132,6 +161,7 @@ li {
   margin-bottom: 5px;
   display: flex;
   align-items: center;
+  padding: 0 10px;
 }
 
 .dropzoneAdmin li a {
@@ -220,11 +250,13 @@ li a:hover {
   h2 {
     font-size: 20px;
     text-align: center;
+    padding: 5px 0;
   }
 
   h3 {
     text-align: center;
     font-size: 16px;
+    padding: 0;
   }
 
   li {
@@ -234,6 +266,11 @@ li a:hover {
     justify-content: center;
     margin: 5px auto;
     font-size: 15px;
+    padding: 0;
+  }
+
+  .avatar {
+    gap: 5px;
   }
 
   .avatar .log {
@@ -251,6 +288,7 @@ li a:hover {
   }
 
   .avatarImg {
-    width: 75px;
+    width: 90px;
+    padding: 0;
   }
 }
