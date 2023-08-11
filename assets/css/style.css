@@ -305,10 +305,17 @@ li a:hover {
 
   body {
     padding: 0;
+    min-height: calc(100vh - 56px);
   }
 
   .avatarImg {
     width: 90px;
     padding: 0;
+  }
+}
+
+@media only screen and (max-width: 768px) and (orientation: portrait) and (pointer: coarse) {
+  body {
+    min-height: calc(100vh - 56px);
   }
 }
