@@ -25,7 +25,7 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mathématiques - Bastien C.</title>
   <link rel="icon" href="./assets/images/avatar.png" type="image/png">
-  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./assets/css/style.css?v=7" />
   <script src="dropzone/dropzone.min.js"></script>
   <link rel="stylesheet" href="dropzone/dropzone.min.css" />
 </head>

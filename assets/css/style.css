@@ -24,7 +24,7 @@ body {
 
 footer {
   flex-shrink: 0;
-  background-color: #eee;
+  background: linear-gradient(to bottom, #f5f7fa, #e4e8ee);
   box-shadow: 0 0 2px #0000004d;
   text-align: center;
   margin-top: 10px;
@@ -36,7 +36,7 @@ footer {
 }
 
 .pdpadmin {
-  background-color: #d1e3ec;
+  background: linear-gradient(to bottom, #d6e9f7, #a4cbed);
   box-shadow: 0 0 10px #a098eb4d;
 }
 
@@ -61,12 +61,12 @@ footer {
   display: flex;
   align-items: center;
   gap: 20px;
-  background-color: #eee;
+  background: linear-gradient(to bottom, #f5f7fa, #e4e8ee);
   box-shadow: 0 0 10px #0000004d;
 }
 
 .avatarAdmin {
-  background-color: #d1e3ec;
+  background: linear-gradient(to bottom, #d6e9f7, #a4cbed);
   box-shadow: 0 0 10px #a098eb4d;
 }
 
@@ -78,14 +78,14 @@ footer {
 /* Styles dropzone */
 
 .dropzoneContainer {
-  background-color: #eee;
+  background: linear-gradient(to bottom, #f5f7fa, #e4e8ee);
   box-shadow: 0 0 10px #0000004d;
   width: 98%;
   margin: auto;
 }
 
 .containerAdmin {
-  background-color: #d1e3ec;
+  background: linear-gradient(to bottom, #d6e9f7, #a4cbed);
   box-shadow: 0 0 10px #a098eb4d;
 }
 
@@ -185,7 +185,7 @@ li {
 }
 
 .dropzoneAdmin li a {
-  background-color: #42a3d3;
+  background-color: #038bcf;
   color: white;
 }
 
